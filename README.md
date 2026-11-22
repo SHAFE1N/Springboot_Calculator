@@ -1,4 +1,3 @@
-
 # Spring Boot Calculator
 
 **Name:** Shahrier Mokammel\
@@ -6,26 +5,20 @@
 
 A web-based calculator built with Spring Boot, Java 17, and a simple
 HTML/CSS/JavaScript interface.
-:::
 
 ------------------------------------------------------------------------
 
 ## Screenshots
 
-> Before pushing to GitHub, create a folder named `screenshots` in the
-> project root and place the two screenshot files inside it using the
-> filenames shown below.
+The screenshots are stored in the `screenshots` folder in the project root.
 
-### IntelliJ IDEA -- Project / Console
+### IntelliJ IDEA – Project / Console
 
-![IntelliJ IDEA Screenshot](screenshots/Screenshot-2026-11-22-235536.png)
+![IntelliJ IDEA Screenshot](screenshots/Screenshot%202026-11-22%20235536.png)
 
-![Spring Boot Calculator Screenshot](screenshots/Screenshot-2026-11-22-235837.png)
+### Spring Boot Calculator – Browser
 
-### Spring Boot Calculator -- Browser
-
-![Spring Boot Calculator
-Screenshot](screenshots/Screenshot-2026-11-22-235837.png)
+![Spring Boot Calculator Screenshot](screenshots/Screenshot%202026-11-22%20235837.png)
 
 ------------------------------------------------------------------------
 
@@ -48,20 +41,20 @@ to perform basic arithmetic and trigonometric calculations.
 
 ## Technologies Used
 
-  Technology              Purpose
-  ----------------------- ---------------------------------
-  Java 17                 Programming language
-  Spring Boot 3.3.5       Backend framework
-  Spring Web              REST API
-  Maven                   Dependency and build management
-  HTML, CSS, JavaScript   Frontend interface
-  JUnit 5                 Unit testing
-  MockMvc                 Controller testing
-  IntelliJ IDEA           Development environment
+| Technology | Purpose |
+|---|---|
+| Java 17 | Programming language |
+| Spring Boot 3.3.5 | Backend framework |
+| Spring Web | REST API |
+| Maven | Dependency and build management |
+| HTML, CSS, JavaScript | Frontend interface |
+| JUnit 5 | Unit testing |
+| MockMvc | Controller testing |
+| IntelliJ IDEA | Development environment |
 
 ## Project Structure
 
-``` text
+```text
 calculator/
 ├── src/
 │   ├── main/
@@ -101,7 +94,7 @@ calculator/
 5.  Click the Run button beside the `main()` method.
 6.  Open your browser and visit:
 
-``` text
+```text
 http://localhost:8080
 ```
 
@@ -109,7 +102,7 @@ http://localhost:8080
 
 Run the following command from the project directory:
 
-``` bash
+```bash
 mvn spring-boot:run
 ```
 
@@ -117,20 +110,20 @@ mvn spring-boot:run
 
 All calculator endpoints use the base path `/api/calc`.
 
-  Operation         HTTP GET endpoint
-  ----------------- ------------------------------------------
-  Addition          `/api/calc/add?a=10&b=5`
-  Subtraction       `/api/calc/subtract?a=10&b=5`
-  Multiplication    `/api/calc/multiply?a=10&b=5`
-  Division          `/api/calc/divide?a=10&b=5`
-  Power             `/api/calc/power?a=2&b=3`
-  Square root       `/api/calc/sqrt?a=16`
-  Sine              `/api/calc/trig/sin?value=30&unit=deg`
-  Cosine            `/api/calc/trig/cos?value=60&unit=deg`
-  Tangent           `/api/calc/trig/tan?value=45&unit=deg`
-  Inverse sine      `/api/calc/trig/asin?value=0.5&unit=deg`
-  Inverse cosine    `/api/calc/trig/acos?value=0.5&unit=deg`
-  Inverse tangent   `/api/calc/trig/atan?value=1&unit=deg`
+| Operation | HTTP GET endpoint |
+|---|---|
+| Addition | `/api/calc/add?a=10&b=5` |
+| Subtraction | `/api/calc/subtract?a=10&b=5` |
+| Multiplication | `/api/calc/multiply?a=10&b=5` |
+| Division | `/api/calc/divide?a=10&b=5` |
+| Power | `/api/calc/power?a=2&b=3` |
+| Square root | `/api/calc/sqrt?a=16` |
+| Sine | `/api/calc/trig/sin?value=30&unit=deg` |
+| Cosine | `/api/calc/trig/cos?value=60&unit=deg` |
+| Tangent | `/api/calc/trig/tan?value=45&unit=deg` |
+| Inverse sine | `/api/calc/trig/asin?value=0.5&unit=deg` |
+| Inverse cosine | `/api/calc/trig/acos?value=0.5&unit=deg` |
+| Inverse tangent | `/api/calc/trig/atan?value=1&unit=deg`
 
 For trigonometric endpoints, `unit` can be `deg` or `rad`. If omitted,
 it defaults to `deg`.
@@ -139,13 +132,13 @@ it defaults to `deg`.
 
 Request:
 
-``` text
+```text
 GET http://localhost:8080/api/calc/add?a=2&b=3
 ```
 
 Response:
 
-``` json
+```json
 {
   "operation": "add",
   "result": 5.0
@@ -162,7 +155,7 @@ README.
 
 ### 1. CalculatorApplication.java
 
-``` java
+```java
 package com.example.calculator;
 
 import org.springframework.boot.SpringApplication;
@@ -181,7 +174,7 @@ public class CalculatorApplication {
 
 This service contains the calculator's mathematical operations.
 
-``` java
+```java
 package com.example.calculator.service;
 
 import org.springframework.stereotype.Service;
@@ -276,7 +269,7 @@ public class CalculatorService {
 This controller connects the REST API endpoints to the calculator
 service.
 
-``` java
+```java
 package com.example.calculator.controller;
 
 import com.example.calculator.service.CalculatorService;
@@ -375,7 +368,7 @@ public class CalculatorController {
 
 To execute the unit tests and controller tests, run:
 
-``` bash
+```bash
 mvn test
 ```
 
@@ -387,4 +380,3 @@ invalid mathematical inputs, and REST API responses.
 ::: {align="center"}
 **Developed by Shahrier Mokammel**\
 **Student ID: IT24050**
-:::
