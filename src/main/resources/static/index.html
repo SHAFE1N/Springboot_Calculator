@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spring Boot Calculator</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 24px; }
+  .calc { background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.12); padding: 20px; width: 340px; }
+  h1 { font-size: 18px; margin: 0 0 12px; text-align: center; }
+  input[type=text] { width: 100%; box-sizing: border-box; font-size: 24px; text-align: right; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+  #status { min-height: 20px; font-size: 13px; color: #c0392b; margin: 6px 0; text-align: right; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  button { padding: 12px 0; font-size: 16px; border: none; border-radius: 8px; background: #e8eaed; cursor: pointer; }
+  button:hover { background: #d7dadf; }
+  button.op { background: #dbe7ff; }
+  button.fn { background: #e6f4ea; }
+  button.eq { background: #1a73e8; color: #fff; }
+  .unit { display: flex; gap: 12px; justify-content: center; margin: 10px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="calc">
+  <h1>Spring Boot Calculator</h1>
+  <input type="text" id="display" value="0" readonly>
+  <div id="status"></div>
+  <div class="unit">
+    Angle:
+    <label><input type="radio" name="unit" value="deg" checked> Degrees</label>
+    <label><input type="radio" name="unit" value="rad"> Radians</label>
+  </div>
+  <div class="grid">
+    <button class="fn" onclick="unary('sin')">sin</button>
+    <button class="fn" onclick="unary('cos')">cos</button>
+    <button class="fn" onclick="unary('tan')">tan</button>
+    <button onclick="clearAll()">C</button>
+
+    <button class="fn" onclick="unary('asin')">asin</button>
+    <button class="fn" onclick="unary('acos')">acos</button>
+    <button class="fn" onclick="unary('atan')">atan</button>
+    <button class="fn" onclick="unary('sqrt')">√</button>
+
+    <button onclick="digit('7')">7</button>
+    <button onclick="digit('8')">8</button>
+    <button onclick="digit('9')">9</button>
+    <button class="op" onclick="setOp('divide')">÷</button>
+
+    <button onclick="digit('4')">4</button>
+    <button onclick="digit('5')">5</button>
+    <button onclick="digit('6')">6</button>
+    <button class="op" onclick="setOp('multiply')">×</button>
+
+    <button onclick="digit('1')">1</button>
+    <button onclick="digit('2')">2</button>
+    <button onclick="digit('3')">3</button>
+    <button class="op" onclick="setOp('subtract')">−</button>
+
+    <button onclick="digit('0')">0</button>
+    <button onclick="digit('.')">.</button>
+    <button class="op" onclick="setOp('power')">xʸ</button>
+    <button class="op" onclick="setOp('add')">+</button>
+
+    <button class="eq" style="grid-column: span 4" onclick="equals()">=</button>
+  </div>
+</div>
+
+<script>
+  let current = '0', first = null, op = null, fresh = true;
+  const display = document.getElementById('display');
+  const statusEl = document.getElementById('status');
+  const unit = () => document.querySelector('input[name=unit]:checked').value;
+
+  function show(v) { display.value = v; }
+  function err(m) { statusEl.textContent = m || ''; }
+
+  function digit(d) {
+    err();
+    if (fresh) { current = d === '.' ? '0.' : d; fresh = false; }
+    else if (d === '.' && current.includes('.')) return;
+    else current = current === '0' && d !== '.' ? d : current + d;
+    show(current);
+  }
+
+  function setOp(o) {
+    if (op && !fresh) { equals(o); return; }
+    first = parseFloat(current); op = o; fresh = true;
+  }
+
+  async function call(url) {
+    const res = await fetch(url);
+    const body = await res.json();
+    if (!res.ok) throw new Error(body.error || 'Request failed');
+    return body.result;
+  }
+
+  async function equals(nextOp) {
+    if (!op) return;
+    try {
+      const r = await call(`/api/calc/${op}?a=${first}&b=${parseFloat(current)}`);
+      current = String(r); first = r; show(current); err();
+    } catch (e) { err(e.message); }
+    op = nextOp || null; fresh = true;
+  }
+
+  async function unary(fn) {
+    try {
+      const url = fn === 'sqrt'
+        ? `/api/calc/sqrt?a=${parseFloat(current)}`
+        : `/api/calc/trig/${fn}?value=${parseFloat(current)}&unit=${unit()}`;
+      current = String(await call(url)); show(current); err();
+    } catch (e) { err(e.message); }
+    fresh = true;
+  }
+
+  function clearAll() { current = '0'; first = null; op = null; fresh = true; show(current); err(); }
+</script>
+</body>
+</html>
