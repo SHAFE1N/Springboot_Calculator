@@ -1,4 +1,4 @@
-::: {align="center"}
+
 # Spring Boot Calculator
 
 **Name:** Shahrier Mokammel\
@@ -18,8 +18,9 @@ HTML/CSS/JavaScript interface.
 
 ### IntelliJ IDEA -- Project / Console
 
-![IntelliJ IDEA
-Screenshot](screenshots/Screenshot-2026-11-22-235536.png)
+![IntelliJ IDEA Screenshot](screenshots/Screenshot-2026-11-22-235536.png)
+
+![Spring Boot Calculator Screenshot](screenshots/Screenshot-2026-11-22-235837.png)
 
 ### Spring Boot Calculator -- Browser
 
